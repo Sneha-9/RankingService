@@ -30,7 +30,7 @@ public class ConfigurationProperties {
 
     }
 
-    @org.springframework.boot.context.properties.ConfigurationProperties(prefix = "pointservice")
+
     @Setter
     @Getter
     public class PointServiceConfig {

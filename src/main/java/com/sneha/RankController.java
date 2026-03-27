@@ -18,7 +18,7 @@ public class RankController {
     private RankingService rankingService;
 
 
-    @PostMapping(value = "/rank/users", produces = "application/json")
+    @PostMapping(value = Constant.GET_RANK_DATA_PATH, produces = Constant.JSON_MEDIA_TYPE)
     GetUserRankResponse getUserRank(@RequestBody GetUserRankRequest getUserRankRequest) throws Exception {
        List<UserPoint> response = rankingService.getUserRank(getUserRankRequest.getMinPoint());
        return GetUserRankResponse.newBuilder().addAllUserPointList(response).build();

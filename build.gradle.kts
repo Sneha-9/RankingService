@@ -2,6 +2,7 @@ plugins {
     id("org.springframework.boot") version "4.0.3"
     id("io.spring.dependency-management") version "1.1.7"
     id("com.google.protobuf") version "0.9.6"
+    id ("jacoco")
     application
 }
 
@@ -36,7 +37,12 @@ dependencies {
 
     implementation("org.postgresql:postgresql:42.7.7")
 
-
+    testImplementation("org.springframework.boot:spring-boot-resttestclient:4.0.3")
+    testImplementation("org.wiremock.integrations:wiremock-spring-boot:4.2.1")
+    testImplementation("org.testcontainers:junit-jupiter:1.21.4")
+    testImplementation("org.testcontainers:testcontainers:1.21.4")
+    testImplementation("org.testcontainers:postgresql:1.21.4")
+   // implementation("org.springframework.boot:spring-boot-starter-log4j2")
     implementation("com.google.protobuf:protobuf-java-util:4.33.5")
     implementation("com.google.protobuf:protobuf-java:4.33.5")
     compileOnly("org.projectlombok:lombok:1.18.42")
@@ -54,4 +60,21 @@ tasks.withType<ProcessResources> {
 
 tasks.test {
     useJUnitPlatform()
+}
+tasks.test {
+    useJUnitPlatform()
+
+    finalizedBy(tasks.jacocoTestReport, tasks.jacocoTestCoverageVerification)
+}
+
+
+tasks.jacocoTestReport {
+
+    classDirectories.setFrom(
+        files(classDirectories.files.map {
+            fileTree(it) {
+                exclude("com/sneha/error**","com/sneha/Constant**","com/sneha/Main**","com/sneha/userservice**", "com/sneha/pointservice**","com/sneha/rankingservice**")
+            }
+        })
+    )
 }
