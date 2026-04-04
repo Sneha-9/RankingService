@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: rankingservice-svc
+  namespace: rsn
+spec:
+  selector:
+    app: rankingservice
+  ports:
+    - protocol: TCP
+      port: 80         # Port the service listens on inside the cluster
+      targetPort: 8093 # The port your app runs on inside the pod
+  type: ClusterIP

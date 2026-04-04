@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rankingservice
+  namespace: rsn
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: rankingservice
+  template:
+    metadata:
+      labels:
+        app: rankingservice
+    spec:
+      containers:
+        - name: rankingservice
+          image: sneha0911/rankingservice:latest
+          env:
+            - name: USER_SERVICE_HOST
+              value: userservice.userservicenamespace
+            - name: POINT_SERVICE_HOST
+              value: pointservice-svc.psn
+          ports:
+            - containerPort: 8093
